@@ -1,0 +1,53 @@
+* {
+	box-sizing: border-box;
+}
+
+textarea {
+	width: 90%;
+	height: 70%;
+	resize: none;
+}
+
+.article {
+	width: 90%;
+	height: 70%;
+	border: 1px solid black;
+	padding: 10px;
+	/*white-space: pre;*/
+	overflow-y: scroll;
+}
+
+.editDiv {
+	position: absolute;
+	width: 100vw; 
+	height: 100vh;
+	display: grid; 
+	grid-auto-flow: column;
+	justify-content: center; 
+	align-items: center; 
+	justify-items: center;
+}
+
+.container {
+	border-radius: 20px;
+	box-shadow: 0 0 12px white;
+	margin-bottom: 1rem; 
+	grid-column-start: col-2-start 1;
+	grid-row-start: row-start 1;
+	display: flex; 
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+	background-color: white;
+	margin-right: 20px;
+	position: absolute;
+	/*width: 60vw;*/
+	width: 70%;
+	/*height: 90vh;*/
+	max-width: 900px;
+	/*min-width: 600px;*/
+	height: 560px;
+
+	z-index: 100;
+}

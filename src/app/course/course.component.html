@@ -14,9 +14,9 @@
 <app-add-article [topicId]="articleTopicId" [courseId]="course._id" *ngIf="addArticle"></app-add-article>
 
 
-<div class="backdrop" *ngIf="addAssignment" (click)="addAssignment = false"></div>
+<!-- <div class="backdrop" *ngIf="addAssignment" (click)="addAssignment = false"></div> -->
 
-<div class="backdrop" *ngIf="addAssignment || addPost" (click)="addAssignment = false; addPost = false"></div>
+<div class="backdrop" *ngIf="addAssignment || addPost || addArticle" (click)="addAssignment = false; addPost = false; addArticle = false"></div>
 
 <body id="main2" *ngIf="!loading">
 	<div [hidden]="deleteCourseState === 'hidden'" class="backdrop"></div>

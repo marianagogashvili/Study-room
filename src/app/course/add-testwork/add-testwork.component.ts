@@ -107,6 +107,32 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
   	document.getElementById('create__btn').scrollIntoView({ behavior: 'smooth' });
   }
 
+  onAddChoiceQuestion() {
+    const group = new FormGroup({
+      'title': new FormControl('', Validators.required),
+      'a': new FormControl('', Validators.required),
+      'b': new FormControl('', Validators.required),
+      'c': new FormControl('', Validators.required),
+      'd': new FormControl('', Validators.required),
+      'e': new FormControl('', Validators.required),
+      'f': new FormControl('', Validators.required),
+      'answers': new FormArray([
+        new FormGroup({
+          'a': new FormControl(false, Validators.required),
+          'b': new FormControl(false, Validators.required),
+          'c': new FormControl(false, Validators.required),
+          'd': new FormControl(false, Validators.required),
+          'e': new FormControl(false, Validators.required),
+          'f': new FormControl(false, Validators.required)
+        })
+      ], Validators.required),
+      'points': new FormControl('', Validators.required),
+    });
+    (<FormArray>this.createForm.get('testQuestions')).push(group);
+    document.getElementById('create__btn').scrollIntoView({ behavior: 'smooth' });
+
+  }
+
   onAddQuestion() {
   	const group = new FormGroup({
   		'title': new FormControl('', Validators.required),
@@ -125,42 +151,44 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
  
   saveTestwork() {
   	const testQuestions = this.createForm.value.testQuestions;
-  	if (testQuestions !== []) {
-  		const title = this.createForm.value.title;
-      const tries = this.createForm.value.tries;
-	  	const deadline = this.createForm.value.deadline;
-	  	const hidden = this.createForm.value.hidden;
-	  	const timeRestriction = this.createForm.value.hours * 3600 + this.createForm.value.minutes * 60;
-	  	console.log(this.createForm.value.testQuestions);
+    console.log(testQuestions);
 
-	  	if (this.editTestwork) {
-	  		this.testworkService.updateTestwork({
-		  		testId: this.editTestwork._id,
-		  		title: title, 
-          tries: tries,
-		  		deadline: deadline, 
-		  		hidden: hidden,
-		  		timeRestriction: timeRestriction,
-		  		questions: testQuestions}).subscribe(result => {
-		  			this.router.navigate(['/course/', this.courseId]);
-		  	});
-	  	} else {
-	  		this.testworkService.createTestwork({
-		  		courseId: this.courseId,
-		  		title: title, 
-          tries: tries,
-		  		deadline: deadline, 
-		  		hidden: hidden,
-		  		timeRestriction: timeRestriction,
-		  		topicId: this.topicId,
-		  		questions: testQuestions}).subscribe(result => {
-		  			this.router.navigate(['/course/', this.courseId]);
-		  	});
-	  	}
+  	// if (testQuestions !== []) {
+  	// 	const title = this.createForm.value.title;
+   //    const tries = this.createForm.value.tries;
+	  // 	const deadline = this.createForm.value.deadline;
+	  // 	const hidden = this.createForm.value.hidden;
+	  // 	const timeRestriction = this.createForm.value.hours * 3600 + this.createForm.value.minutes * 60;
+	  // 	console.log(this.createForm.value.testQuestions);
+
+	  // 	if (this.editTestwork) {
+	  // 		this.testworkService.updateTestwork({
+		 //  		testId: this.editTestwork._id,
+		 //  		title: title, 
+   //        tries: tries,
+		 //  		deadline: deadline, 
+		 //  		hidden: hidden,
+		 //  		timeRestriction: timeRestriction,
+		 //  		questions: testQuestions}).subscribe(result => {
+		 //  			this.router.navigate(['/course/', this.courseId]);
+		 //  	});
+	  // 	} else {
+	  // 		this.testworkService.createTestwork({
+		 //  		courseId: this.courseId,
+		 //  		title: title, 
+   //        tries: tries,
+		 //  		deadline: deadline, 
+		 //  		hidden: hidden,
+		 //  		timeRestriction: timeRestriction,
+		 //  		topicId: this.topicId,
+		 //  		questions: testQuestions}).subscribe(result => {
+		 //  			this.router.navigate(['/course/', this.courseId]);
+		 //  	});
+	  // 	}
 	  	
-  	} else {
-  		//show error
-  	}
+  	// } else {
+  	// 	//show error
+  	// }
   }
 
   ngOnDestroy() {
