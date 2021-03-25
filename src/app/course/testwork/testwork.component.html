@@ -2,7 +2,6 @@
 	<h1>{{ testwork.title }}</h1>
 	<p>This test lasts {{ timeRestriction }}</p>
 	<p>Deadline: {{ testwork.deadline.slice(0, 16) | date: 'dd MMMM yyyy  \'at\' hh:mm' }}</p>
-	<p>Max number of tries: {{ testwork.tries }}</p>
 	<button [disabled]="!available" class="start__btn" (click)="startTheTest()">Start</button>
 </div>
 <div  *ngIf="!loading && studentAnswer.length !== 0 " class="answers__div">
@@ -12,7 +11,8 @@
 			<span *ngIf="answer.points || answer.points === 0" class="points__span">points: {{  answer.points }}  / {{ answer.question.points }}</span>
 			<span *ngIf="!answer.points && answer.points !== 0" class="pending__span">pending</span>
 			{{ answer.question.title }}</h3>
-		<div class="choice__list" *ngIf="answer.question.a">
+
+		<div class="choice__list" *ngIf="!answer.question.e">
 			<div class="choice__div">
 				<p [ngClass]="{'correct__choice': (answer.question.answer === 'a'), 'wrong__choice': answer.studentAnswer === 'a' && answer.points === 0}">a</p>
 				{{ answer.question.a }}
@@ -31,6 +31,40 @@
 			</div>
 			
 		</div>
+
+		<div class="choice__list" *ngIf="answer.question.e">
+			<div class="choice__div">
+				<label id="a__answ" for="">a)</label>
+				<input id="a__answ" type="checkbox">
+				{{ answer.question.a }}
+			</div>
+			<div class="choice__div">
+				<label id="b__answ" for="">b)</label>
+				<input id="b__answ" type="checkbox">
+				{{ answer.question.b }}
+			</div>
+			<div class="choice__div">
+				<label id="c__answ" for="">c)</label>
+				<input id="c__answ" type="checkbox">
+				{{ answer.question.c }}
+			</div>
+			<div class="choice__div">
+				<label id="d__answ" for="">d)</label>
+				<input id="d__answ" type="checkbox">
+				{{ answer.question.d }}
+			</div>
+			<div class="choice__div">
+				<label id="e__answ" for="">e)</label>
+				<input id="e__answ" type="checkbox">
+				{{ answer.question.e }}
+			</div>
+			<div class="choice__div">
+				<label id="f__answ" for="">f)</label>
+				<input id="f__answ" type="checkbox">
+				{{ answer.question.f }}
+			</div>
+		</div>
+
 		<div *ngIf="!answer.question.a">
 			
 			<div *ngIf="answer.points === 0">
@@ -51,7 +85,7 @@
 <div *ngIf="!loading && workMode && available" class="main__div">
 	<div class="question__div" >
 		<h3 class="question__h3"><span class="points__span">points: {{ testwork.questions[currentQuestionId].points }}</span>{{ testwork.questions[currentQuestionId].title }}</h3>
-		<div *ngIf="testwork.questions[currentQuestionId].a">
+		<div *ngIf="!testwork.questions[currentQuestionId].e">
 			<div class="choice__div" (click)="addAnswer('a')">
 				<p [ngClass]="answers[currentQuestionId] === 'a' && {'active__choice': true}">a</p>
 				{{ testwork.questions[currentQuestionId].a }}
@@ -75,6 +109,70 @@
 				*ngIf="testwork.questions.length > currentQuestionId+1"
 				>Next</button>
 		</div>
+		<div class="choice__list" *ngIf="testwork.questions[currentQuestionId].e">
+			<div class="choice__div">
+				<input 
+					[checked]="answers[currentQuestionId] && answers[currentQuestionId].a === true ? 'checked' : ''" 
+					id="a__answ" 
+					type="checkbox"
+					[(ngModel)]="a_answ"
+					>
+				<label id="a__answ" for="a__answ">a) {{ testwork.questions[currentQuestionId].a }}</label>
+				
+			</div>
+			<div class="choice__div">
+				<input 
+					[checked]="answers[currentQuestionId] && answers[currentQuestionId].b === true ? 'checked' : ''" 
+					type="checkbox"
+					id="b__answ" 
+					[(ngModel)]="b_answ">
+				<label id="b__answ" for="b__answ">b) {{ testwork.questions[currentQuestionId].b }}</label>
+				
+			</div>
+			<div class="choice__div">
+				<input 
+					[checked]="answers[currentQuestionId] && answers[currentQuestionId].c === true ? 'checked' : ''" 
+					id="c__answ" 
+					type="checkbox"
+					[(ngModel)]="c_answ">
+				<label id="c__answ" for="c__answ">c) {{ testwork.questions[currentQuestionId].c }}</label>
+				
+			</div>
+			<div class="choice__div">
+				<input 
+					[checked]="answers[currentQuestionId] && answers[currentQuestionId].d === true ? 'checked' : ''" 
+					id="d__answ" 
+					type="checkbox"
+					[(ngModel)]="d_answ">
+				<label id="d__answ" for="d__answ">d) {{ testwork.questions[currentQuestionId].d }}</label>
+				
+			</div>
+			<div class="choice__div">
+				<input 
+					[checked]="answers[currentQuestionId] && answers[currentQuestionId].e === true ? 'checked' : ''" 
+					id="e__answ" 
+					type="checkbox"
+					[(ngModel)]="e_answ">
+				<label id="e__answ" for="e__answ">e) {{ testwork.questions[currentQuestionId].e }}</label>
+				
+			</div>
+			<div class="choice__div">
+				<input 
+					[checked]="answers[currentQuestionId] && answers[currentQuestionId].f === true ? 'checked' : ''" 
+					id="f__answ" 
+					type="checkbox"
+					[(ngModel)]="f_answ">
+				<label id="f__answ" for="f__answ">f) {{ testwork.questions[currentQuestionId].f }}</label>
+				
+			</div>
+			<button 
+				class="start__btn" 
+				type="button" 
+				(click)="addAnswer({'a':a_answ, 'b':b_answ})"
+				*ngIf="testwork.questions.length > currentQuestionId+1"
+				>Next</button>
+		</div>
+
 		<form *ngIf="!testwork.questions[currentQuestionId].a" [formGroup]="answerForm" (ngSubmit)="saveAnswer()">
 			<textarea 
 				formControlName="answer" 

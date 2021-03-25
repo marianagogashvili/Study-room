@@ -32,6 +32,8 @@ export class TestworkComponent implements OnInit, OnDestroy {
   timerVal = '';
   timer;
 
+  a_answ = false; b_answ = false; c_answ = false; d_answ = false; e_answ = false; f_answ = false;
+
   secondsLeft;
   currentDate = new Date(new Date().setHours(new Date().getHours() + 2));
 
@@ -105,7 +107,10 @@ export class TestworkComponent implements OnInit, OnDestroy {
 
   addAnswer(answer) {
   	this.answers[this.currentQuestionId] = answer;
-  	
+  	if (answer instanceof Object) {
+      this.currentQuestionId += 1;
+    }
+    
   	console.log(this.answers);
   }
 
@@ -140,7 +145,7 @@ export class TestworkComponent implements OnInit, OnDestroy {
 			this.saveTest();
 		}
 
-		console.log(Math.floor(seconds / 3600) + " hrs " + Math.round(seconds % 3600 / 60) + ":" + seconds % 60);
+		// console.log(Math.floor(seconds / 3600) + " hrs " + Math.round(seconds % 3600 / 60) + ":" + seconds % 60);
 	}, 1000);
 	return timer;
   }

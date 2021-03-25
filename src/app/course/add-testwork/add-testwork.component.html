@@ -28,6 +28,7 @@
 					class="main__input" 
 					type="datetime-local" 
 					formControlName="deadline"
+					[min]="currentDate"
 					required>
 				</div>
 			</div>
@@ -61,12 +62,14 @@
 			</div>		
 		</div>
 		
-		
+		<!-- *ngIf="!questionControl.controls.e && !questionControl.controls.autoCheck" -->
 		<div 
 			formArrayName="testQuestions" 
 			*ngFor="let questionControl of createForm.get('testQuestions').controls;let i = index">
 			<hr color="#d4d4d4">
-			<div *ngIf="questionControl.controls.a" class="question__div"  [formGroupName]="i">	
+			<div 
+			*ngIf="questionControl.controls.a"
+			class="question__div"  [formGroupName]="i">	
 				<p class="question__num__p">{{ i+1 }}</p>
 				<button (click)="removeQuestion(i)" class="delete__btn" type="button">
 					<fa-icon class="trash__icon" [icon]="trashIcon"></fa-icon>
@@ -85,7 +88,6 @@
 				<div class="options">
 					<div class="options__div">
 						<div>
-							<input *ngIf="questionControl.controls.answers" type="checkbox">
 							<label for="a">a)</label>
 							<input 
 								id="a" 
@@ -95,7 +97,6 @@
 								placeholder="option a">
 						</div>
 						<div>
-							<input *ngIf="questionControl.controls.answers" type="checkbox">
 							<label for="b">b)</label>
 							<input 
 								id="b" 
@@ -107,7 +108,6 @@
 					</div>	
 					<div class="options__div">
 						<div>
-							<input *ngIf="questionControl.controls.answers" type="checkbox">
 							<label for="c">c)</label>
 							<input 
 								id="c" 
@@ -117,7 +117,6 @@
 								placeholder="option c">
 						</div>
 						<div>
-							<input *ngIf="questionControl.controls.answers" type="checkbox" >
 							<label for="d">d)</label>
 							<input 
 								id="d" 
@@ -129,7 +128,6 @@
 					</div>
 					<div class="options__div" *ngIf="questionControl.controls.answers">
 						<div>
-							<input *ngIf="questionControl.controls.answers" type="checkbox" >
 							<label for="e">e)</label>
 							<input 
 								id="e" 
@@ -139,7 +137,6 @@
 								placeholder="option e">
 						</div>
 						<div>
-							<input *ngIf="questionControl.controls.answers" type="checkbox" >
 							<label for="f">f)</label>
 							<input 
 								id="f" 
@@ -165,6 +162,22 @@
 						</select>
 					</div>
 
+					<div *ngIf="questionControl.controls.answers" formGroupName="answers">
+						<label>Answers</label>
+						<label for="answ__a">a</label>
+						<input id="answ__a" formControlName="a" type="checkbox">
+						<label for="answ__b">b</label>
+						<input id="answ__b" formControlName="b" type="checkbox">
+						<label for="answ__c">c</label>
+						<input id="answ__c" formControlName="c" type="checkbox">
+						<label for="answ__d">d</label>
+						<input id="answ__d" formControlName="d" type="checkbox">
+						<label for="answ__e">e</label>
+						<input id="answ__e" formControlName="e" type="checkbox">
+						<label for="answ__f">f</label>
+						<input id="answ__f" formControlName="f" type="checkbox">
+					</div>
+
 					<div class="points__div">		
 						<label for="answer">Max points</label>
 						<input 
@@ -179,6 +192,8 @@
 				</div>
 				
 			</div>
+
+			
 			<div *ngIf="!questionControl.controls.a" [formGroupName]="i" class="regular__question__div">
 				<p class="question__num__p">{{ i+1 }}</p>
 				<button (click)="removeQuestion(i)" class="delete__btn" type="button">

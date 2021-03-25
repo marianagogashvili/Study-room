@@ -19,6 +19,7 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
 
   // editMode = false;
   editTestwork;
+  currentDate = (new Date()).toISOString().slice(0, 16);
 
   trashIcon = faTrashAlt;
 
@@ -30,6 +31,8 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
   			  private router: Router) { }
 
   ngOnInit() {
+    console.log(this.currentDate);
+
   	this.createForm = new FormGroup({
   		'title': new FormControl('', Validators.required),
   		'hidden': new FormControl(false, Validators.required),
@@ -70,12 +73,14 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
 		  		}
 
 		  		let patchQuestions = (<FormArray>this.createForm.get('testQuestions'));
-		  		this.editTestwork.questions.forEach((question: {a}, i) => {
+		  		this.editTestwork.questions.forEach((question: {answer, answers}, i) => {
 		  			console.log(question, i);
 
-		  			if (question.a) {
+		  			if (question.answer) {
 		  				this.onAddTestQuestion();
-		  			} else {
+		  			} else if (question.answers) {
+              this.onAddChoiceQuestion();
+            } else {
 		  				this.onAddQuestion();
 		  			}
 		  			patchQuestions.controls[i].patchValue(question);
@@ -116,8 +121,7 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
       'd': new FormControl('', Validators.required),
       'e': new FormControl('', Validators.required),
       'f': new FormControl('', Validators.required),
-      'answers': new FormArray([
-        new FormGroup({
+      'answers': new FormGroup({
           'a': new FormControl(false, Validators.required),
           'b': new FormControl(false, Validators.required),
           'c': new FormControl(false, Validators.required),
@@ -125,7 +129,7 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
           'e': new FormControl(false, Validators.required),
           'f': new FormControl(false, Validators.required)
         })
-      ], Validators.required),
+      ,
       'points': new FormControl('', Validators.required),
     });
     (<FormArray>this.createForm.get('testQuestions')).push(group);
@@ -153,42 +157,42 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
   	const testQuestions = this.createForm.value.testQuestions;
     console.log(testQuestions);
 
-  	// if (testQuestions !== []) {
-  	// 	const title = this.createForm.value.title;
-   //    const tries = this.createForm.value.tries;
-	  // 	const deadline = this.createForm.value.deadline;
-	  // 	const hidden = this.createForm.value.hidden;
-	  // 	const timeRestriction = this.createForm.value.hours * 3600 + this.createForm.value.minutes * 60;
-	  // 	console.log(this.createForm.value.testQuestions);
+  	if (testQuestions !== []) {
+  		const title = this.createForm.value.title;
+      const tries = this.createForm.value.tries;
+	  	const deadline = this.createForm.value.deadline;
+	  	const hidden = this.createForm.value.hidden;
+	  	const timeRestriction = this.createForm.value.hours * 3600 + this.createForm.value.minutes * 60;
+	  	console.log(this.createForm.value.testQuestions);
 
-	  // 	if (this.editTestwork) {
-	  // 		this.testworkService.updateTestwork({
-		 //  		testId: this.editTestwork._id,
-		 //  		title: title, 
-   //        tries: tries,
-		 //  		deadline: deadline, 
-		 //  		hidden: hidden,
-		 //  		timeRestriction: timeRestriction,
-		 //  		questions: testQuestions}).subscribe(result => {
-		 //  			this.router.navigate(['/course/', this.courseId]);
-		 //  	});
-	  // 	} else {
-	  // 		this.testworkService.createTestwork({
-		 //  		courseId: this.courseId,
-		 //  		title: title, 
-   //        tries: tries,
-		 //  		deadline: deadline, 
-		 //  		hidden: hidden,
-		 //  		timeRestriction: timeRestriction,
-		 //  		topicId: this.topicId,
-		 //  		questions: testQuestions}).subscribe(result => {
-		 //  			this.router.navigate(['/course/', this.courseId]);
-		 //  	});
-	  // 	}
+	  	if (this.editTestwork) {
+	  		this.testworkService.updateTestwork({
+		  		testId: this.editTestwork._id,
+		  		title: title, 
+          tries: tries,
+		  		deadline: deadline, 
+		  		hidden: hidden,
+		  		timeRestriction: timeRestriction,
+		  		questions: testQuestions}).subscribe(result => {
+		  			this.router.navigate(['/course/', this.courseId]);
+		  	});
+	  	} else {
+	  		this.testworkService.createTestwork({
+		  		courseId: this.courseId,
+		  		title: title, 
+          tries: tries,
+		  		deadline: deadline, 
+		  		hidden: hidden,
+		  		timeRestriction: timeRestriction,
+		  		topicId: this.topicId,
+		  		questions: testQuestions}).subscribe(result => {
+		  			this.router.navigate(['/course/', this.courseId]);
+		  	});
+	  	}
 	  	
-  	// } else {
-  	// 	//show error
-  	// }
+  	} else {
+  		//show error
+  	}
   }
 
   ngOnDestroy() {
