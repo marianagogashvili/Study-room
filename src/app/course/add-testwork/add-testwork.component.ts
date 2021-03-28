@@ -18,6 +18,7 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
   createForm;
 
   // editMode = false;
+  timeRestriction = true;
   editTestwork;
   currentDate = (new Date()).toISOString().slice(0, 16);
 
@@ -38,8 +39,7 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
   		'hidden': new FormControl(false, Validators.required),
   		'deadline': new FormControl('', Validators.required),
   		'hours': new FormControl(0, Validators.required),
-  		'minutes': new FormControl(0, Validators.required),
-      'tries': new FormControl(1, Validators.required),
+  		'minutes': new FormControl(5, Validators.required),
   		'testQuestions': new FormArray([])
   	});
 
@@ -60,25 +60,26 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
   			.getTestwork({testId: queryParams['testworkId']})
   			.subscribe(testwork => {
 				if (testwork) {
-					this.editTestwork = testwork;
-		  			this.createForm.patchValue({
-		  				'title': this.editTestwork.title,
-              'tries': this.editTestwork.tries,
-		  				'deadline': this.editTestwork.deadline.slice(0, 16),
-		  				'hours': Math.floor(this.editTestwork.timeRestriction /  3600),
-		  				'minutes': Math.floor(this.editTestwork.timeRestriction % 3600 / 60),
-		  			});
+  					this.editTestwork = testwork;
+            this.timeRestriction = this.editTestwork.timeRestriction === null ? false : true;
+
+  	  			this.createForm.patchValue({
+  	  				'title': this.editTestwork.title,
+  	  				'deadline': this.editTestwork.deadline.slice(0, 16),
+  	  				'hours': this.timeRestriction === true ? Math.floor(this.editTestwork.timeRestriction /  3600) : 0,
+  	  				'minutes': this.timeRestriction === true ? Math.floor(this.editTestwork.timeRestriction % 3600 / 60) : 0,
+  	  			});
 		  		}  else {
 			  		this.router.navigate(['/course/', this.courseId]);
 		  		}
 
 		  		let patchQuestions = (<FormArray>this.createForm.get('testQuestions'));
-		  		this.editTestwork.questions.forEach((question: {answer, answers}, i) => {
+		  		this.editTestwork.questions.forEach((question: {a, e}, i) => {
 		  			console.log(question, i);
 
-		  			if (question.answer) {
+		  			if (question.a && !question.e) {
 		  				this.onAddTestQuestion();
-		  			} else if (question.answers) {
+		  			} else if (question.e) {
               this.onAddChoiceQuestion();
             } else {
 		  				this.onAddQuestion();
@@ -159,7 +160,7 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
 
   	if (testQuestions !== []) {
   		const title = this.createForm.value.title;
-      const tries = this.createForm.value.tries;
+
 	  	const deadline = this.createForm.value.deadline;
 	  	const hidden = this.createForm.value.hidden;
 	  	const timeRestriction = this.createForm.value.hours * 3600 + this.createForm.value.minutes * 60;
@@ -169,10 +170,9 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
 	  		this.testworkService.updateTestwork({
 		  		testId: this.editTestwork._id,
 		  		title: title, 
-          tries: tries,
 		  		deadline: deadline, 
 		  		hidden: hidden,
-		  		timeRestriction: timeRestriction,
+		  		timeRestriction: this.timeRestriction === true ? timeRestriction : null,
 		  		questions: testQuestions}).subscribe(result => {
 		  			this.router.navigate(['/course/', this.courseId]);
 		  	});
@@ -180,10 +180,9 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
 	  		this.testworkService.createTestwork({
 		  		courseId: this.courseId,
 		  		title: title, 
-          tries: tries,
 		  		deadline: deadline, 
 		  		hidden: hidden,
-		  		timeRestriction: timeRestriction,
+		  		timeRestriction: this.timeRestriction === true ? timeRestriction : null,
 		  		topicId: this.topicId,
 		  		questions: testQuestions}).subscribe(result => {
 		  			this.router.navigate(['/course/', this.courseId]);

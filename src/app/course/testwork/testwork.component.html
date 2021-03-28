@@ -1,6 +1,8 @@
 <div *ngIf="!loading && studentAnswer.length === 0 && !workMode " class="cover__div">
 	<h1>{{ testwork.title }}</h1>
-	<p>This test lasts {{ timeRestriction }}</p>
+	<p *ngIf="timeRestriction">This test lasts {{ timeRestriction }}</p>
+	<p *ngIf="!timeRestriction">This test has no time restriction</p>
+
 	<p>Deadline: {{ testwork.deadline.slice(0, 16) | date: 'dd MMMM yyyy  \'at\' hh:mm' }}</p>
 	<button [disabled]="!available" class="start__btn" (click)="startTheTest()">Start</button>
 </div>
@@ -12,7 +14,7 @@
 			<span *ngIf="!answer.points && answer.points !== 0" class="pending__span">pending</span>
 			{{ answer.question.title }}</h3>
 
-		<div class="choice__list" *ngIf="!answer.question.e">
+		<div class="choice__list" *ngIf="!answer.question.e && answer.question.a">
 			<div class="choice__div">
 				<p [ngClass]="{'correct__choice': (answer.question.answer === 'a'), 'wrong__choice': answer.studentAnswer === 'a' && answer.points === 0}">a</p>
 				{{ answer.question.a }}
@@ -85,7 +87,7 @@
 <div *ngIf="!loading && workMode && available" class="main__div">
 	<div class="question__div" >
 		<h3 class="question__h3"><span class="points__span">points: {{ testwork.questions[currentQuestionId].points }}</span>{{ testwork.questions[currentQuestionId].title }}</h3>
-		<div *ngIf="!testwork.questions[currentQuestionId].e">
+		<div *ngIf="testwork.questions[currentQuestionId].a && !testwork.questions[currentQuestionId].e">
 			<div class="choice__div" (click)="addAnswer('a')">
 				<p [ngClass]="answers[currentQuestionId] === 'a' && {'active__choice': true}">a</p>
 				{{ testwork.questions[currentQuestionId].a }}
@@ -109,13 +111,14 @@
 				*ngIf="testwork.questions.length > currentQuestionId+1"
 				>Next</button>
 		</div>
-		<div class="choice__list" *ngIf="testwork.questions[currentQuestionId].e">
+		<form [formGroup]="answersForm" class="choice__list" *ngIf="testwork.questions[currentQuestionId].e">
 			<div class="choice__div">
 				<input 
 					[checked]="answers[currentQuestionId] && answers[currentQuestionId].a === true ? 'checked' : ''" 
 					id="a__answ" 
 					type="checkbox"
 					[(ngModel)]="a_answ"
+					formControlName="a"
 					>
 				<label id="a__answ" for="a__answ">a) {{ testwork.questions[currentQuestionId].a }}</label>
 				
@@ -125,6 +128,7 @@
 					[checked]="answers[currentQuestionId] && answers[currentQuestionId].b === true ? 'checked' : ''" 
 					type="checkbox"
 					id="b__answ" 
+					formControlName="b"
 					[(ngModel)]="b_answ">
 				<label id="b__answ" for="b__answ">b) {{ testwork.questions[currentQuestionId].b }}</label>
 				
@@ -134,6 +138,7 @@
 					[checked]="answers[currentQuestionId] && answers[currentQuestionId].c === true ? 'checked' : ''" 
 					id="c__answ" 
 					type="checkbox"
+					formControlName="c"
 					[(ngModel)]="c_answ">
 				<label id="c__answ" for="c__answ">c) {{ testwork.questions[currentQuestionId].c }}</label>
 				
@@ -143,6 +148,7 @@
 					[checked]="answers[currentQuestionId] && answers[currentQuestionId].d === true ? 'checked' : ''" 
 					id="d__answ" 
 					type="checkbox"
+					formControlName="d"
 					[(ngModel)]="d_answ">
 				<label id="d__answ" for="d__answ">d) {{ testwork.questions[currentQuestionId].d }}</label>
 				
@@ -152,6 +158,7 @@
 					[checked]="answers[currentQuestionId] && answers[currentQuestionId].e === true ? 'checked' : ''" 
 					id="e__answ" 
 					type="checkbox"
+					formControlName="e"
 					[(ngModel)]="e_answ">
 				<label id="e__answ" for="e__answ">e) {{ testwork.questions[currentQuestionId].e }}</label>
 				
@@ -161,19 +168,24 @@
 					[checked]="answers[currentQuestionId] && answers[currentQuestionId].f === true ? 'checked' : ''" 
 					id="f__answ" 
 					type="checkbox"
+					formControlName="f"
 					[(ngModel)]="f_answ">
 				<label id="f__answ" for="f__answ">f) {{ testwork.questions[currentQuestionId].f }}</label>
 				
 			</div>
+			<!-- (click)="addAnswers({'a':a_answ, 'b':b_answ, 'c':c_answ, 'd':d_answ, 'e':e_answ, 'f':f_answ})" -->
 			<button 
 				class="start__btn" 
 				type="button" 
-				(click)="addAnswer({'a':a_answ, 'b':b_answ})"
+				(click)="addAnswers()"
 				*ngIf="testwork.questions.length > currentQuestionId+1"
 				>Next</button>
-		</div>
+		</form>
 
-		<form *ngIf="!testwork.questions[currentQuestionId].a" [formGroup]="answerForm" (ngSubmit)="saveAnswer()">
+		<form 
+			*ngIf="!testwork.questions[currentQuestionId].a" 
+			[formGroup]="answerForm" >
+			<!-- (ngSubmit)="saveAnswer()" -->
 			<textarea 
 				formControlName="answer" 
 				name="answer" 
@@ -182,7 +194,8 @@
 				style="display: block"></textarea>
 			<button 
 				class="start__btn" 
-				type="submit" 
+				type="button"
+				(click)="saveAnswer()" 
 				*ngIf="testwork.questions.length > currentQuestionId+1"
 				>Next</button>
 		</form>
@@ -198,7 +211,7 @@
 	</div>
 
 	<div class="menu__div">
-		<p class="timer__p">{{ timerVal  }}</p>
+		<p *ngIf="timerVal" class="timer__p">{{ timerVal  }}</p>
 
 		<p [ngClass]="{'active__num': currentQuestionId === i, 'filled__num': answers[i] && answers[i] !== null && answers[i] !== '' }" class="question__num" *ngFor="let t of testwork.questions; let i = index" (click)="goToQuestion(i)">{{ i + 1 }}</p>
 

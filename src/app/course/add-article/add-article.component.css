@@ -8,10 +8,39 @@ textarea {
 	resize: none;
 }
 
-.article {
-	width: 90%;
-	height: 70%;
+fa-icon {
+	font-size: 18px;
+}
+
+.buttons {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	height: 55px;
+	background-color: #F2F2F2;
+}
+
+.buttons button {
+	/*width: 8%;*/
+	height: 30px;
+	width: 40px;
+	background-color: white;
+    border: 1px solid grey;
+    border-radius: 3px;
+    color: grey;
+    outline: none;
+}
+
+.buttons button:active {
+	outline: none;
+	color: black;
 	border: 1px solid black;
+}
+
+.article {
+	/*width: 90%;*/
+	height: 100%;
+	border: 2px solid #F2F2F2;
 	padding: 10px;
 	/*white-space: pre;*/
 	overflow-y: scroll;
@@ -47,7 +76,7 @@ textarea {
 	/*height: 90vh;*/
 	max-width: 900px;
 	/*min-width: 600px;*/
-	height: 560px;
+	height: 630px;
 
 	z-index: 100;
 }

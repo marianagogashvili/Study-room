@@ -41,17 +41,21 @@
 
 		<div class="lower__div">
 			<div class="time__div">
-				<div class="hour__div">
+				<div>
+					<label for="time_restriction">No time restriction</label>
+					<input 
+						type="checkbox" 
+						id="time_restriction" 
+						[checked]="timeRestriction === false ? 'checked' : null" 
+						(change)="timeRestriction = !timeRestriction">
+				</div>
+				<div class="hour__div" *ngIf="timeRestriction === true">
 					<label for="hours">Hours</label>
 					<input formControlName="hours" id="hours" min="0" type="number">
 				</div>
-				<div class="minute__div">
+				<div class="minute__div" *ngIf="timeRestriction === true">
 					<label for="minutes">Minutes</label>
-					<input formControlName="minutes" id="minutes" min="0" type="number" >
-				</div>
-				<div class="minute__div">
-					<label for="minutes">Max tries</label>
-					<input formControlName="tries" id="tries" min="1" type="number" >
+					<input formControlName="minutes" id="minutes" min="5" type="number" >
 				</div>
 			</div>
 			

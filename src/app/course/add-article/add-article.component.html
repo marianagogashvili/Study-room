@@ -2,29 +2,49 @@
 <div class="editDiv"> 
 	
 <div class="container" >
-	<div style="display: flex">
-		<button (click)="change('b')">bold</button>
-		<button (click)="change('em')">italic</button>
-		<button (click)="add('ul')">bulleted list</button>
-		<button (click)="add('ol')">numbered list</button>
-
-	</div>
+	<label for="title">Title</label>
+	<input id="title" type="text" placeholder="article title">
 	
-	<div 
-		#container
-		id="article" 
-		class="article" 
-		(input)="article = $event.target.innerText"
-		name="article" 
-		contenteditable="true">
-	    <ul>
-	        <li>List item</li>
-	        <li>List item</li>
-	    </ul>
-	    <h1>ag</h1>
+	<div style="display: flex; flex-direction: column; height: 80%; width: 80%;">
+		<div class="buttons">
+			<button (click)="change('bold')"><fa-icon [icon]="boldIcon"></fa-icon></button>
+			<button (click)="change('italic')"><fa-icon [icon]="italicIcon"></fa-icon></button>
+			<button (click)="change('underline')"><fa-icon [icon]="underIcon"></fa-icon></button>
+
+			<div>
+				<button (click)="resize(-1)"><fa-icon style="font-size: 14px" [icon]="sizeIcon"></fa-icon></button>
+				<button (click)="resize(1)"><fa-icon [icon]="sizeIcon"></fa-icon></button>
+			</div>
+			
+			<div>
+				<button (click)="change('justifyLeft')"><fa-icon [icon]="leftIcon"></fa-icon></button>
+				<button (click)="change('justifyCenter')"><fa-icon [icon]="centerIcon"></fa-icon></button>
+				<button (click)="change('justifyRight')"><fa-icon [icon]="rightIcon"></fa-icon></button>
+			</div>
+			
+			<div>
+				<button (click)="change('insertUnorderedList')"><fa-icon [icon]="ulIcon"></fa-icon></button>
+				<button (click)="change('insertOrderedList')"><fa-icon [icon]="olIcon"></fa-icon></button>
+
+			</div>
+			
+			<button (click)="change('removeFormat')"><fa-icon [icon]="redoIcon"></fa-icon></button>
+			
+
+		</div>
+		
+		<div 
+			#container
+			id="article" 
+			class="article" 
+			(input)="article = $event.target.innerHTML"
+			name="article" 
+			contenteditable="true">
+		    
+		</div>
 	</div>
 
-	{{article}}
+	<button>Save</button>
 </div>
 
 </div>

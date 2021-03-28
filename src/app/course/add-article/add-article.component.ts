@@ -1,4 +1,14 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { faBold } from '@fortawesome/free-solid-svg-icons';
+import { faItalic } from '@fortawesome/free-solid-svg-icons';
+import { faListUl } from '@fortawesome/free-solid-svg-icons';
+import { faListOl } from '@fortawesome/free-solid-svg-icons';
+import { faUnderline } from '@fortawesome/free-solid-svg-icons';
+import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
+import { faFont } from '@fortawesome/free-solid-svg-icons';
+import { faAlignCenter } from '@fortawesome/free-solid-svg-icons';
+import { faAlignLeft } from '@fortawesome/free-solid-svg-icons';
+import { faAlignRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-add-article',
@@ -10,7 +20,14 @@ export class AddArticleComponent implements OnInit {
   @Input() topicId;
   @Input() courseId;
 
+  boldIcon = faBold; italicIcon = faItalic; underIcon = faUnderline;
+  ulIcon = faListUl; olIcon = faListOl;
+  centerIcon = faAlignCenter; leftIcon = faAlignLeft; rightIcon = faAlignRight;
+  sizeIcon = faFont; redoIcon = faRedoAlt;
+
   article ="bt";
+  defaultFontSize = 3;
+
   constructor() { }
 
   ngOnInit() {
@@ -23,43 +40,20 @@ export class AddArticleComponent implements OnInit {
   	ul.appendChild(li);
 
   	this.container.nativeElement.appendChild(ul);
+
   }
 
   change(val) {
-  	// if (window.getSelection) {
-   //      var sel = window.getSelection();
-   //      if (sel.rangeCount) {
-   //          var range = sel.getRangeAt(0).cloneRange();
-   //          range.surroundContents(val);
-   //          sel.removeAllRanges();
-   //          sel.addRange(range);
-   //      }
-   //  }
-  	const div = document.querySelector('.article');
+  	document.execCommand(val, false, null);
+  }
 
-  	let selection= window.getSelection().getRangeAt(0);
-    let selectedText = selection.extractContents();
-    console.log(selectedText);
-    
-    var bold = document.createElement(val);
-    var div2 = document.createElement('p');
-    bold.appendChild(selectedText);
-    selection.insertNode(bold);
-    selection.insertNode(div2);
-    this.container.nativeElement.appendChild(div2);
-    selection.setStartAfter(bold);
-    selection.collapse(true);
-	window.getSelection().removeAllRanges();
-	window.getSelection().addRange(selection);
 
-	document.getElementById("article").focus();
-  }  	
+  resize(val) {
+  	if (this.defaultFontSize + val <= 7 && this.defaultFontSize + val >=1) {
+  		this.defaultFontSize = this.defaultFontSize + val;
+  	}
+  	console.log(this.defaultFontSize);
+  	document.execCommand('fontSize', false, this.defaultFontSize.toString());
+  }
 
-    // const ul = document.createElement('ul');
-  	// var li = document.createElement('li');
-  	// ul.appendChild(li);
-  	// const ul = document.createElement('b');
-  	// var li = document.createElement('li');
-  	// ul.appendChild(li);
-  	// this.container.nativeElement.appendChild(ul);
 }
