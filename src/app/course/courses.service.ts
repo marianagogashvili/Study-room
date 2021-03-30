@@ -224,8 +224,8 @@ export class CoursesService {
 		this.postMode.emit(val);
 	}
 
-	showArticle(val) {
-		this.articleMode.emit(val);
+	showArticle(value, topicId) {
+		this.articleMode.emit({value, topicId});
 	}
 
 	sendNewFeedPost(val) {

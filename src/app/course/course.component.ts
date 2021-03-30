@@ -41,7 +41,8 @@ export class CourseComponent implements OnInit,  OnDestroy {
   addAssignment = false; addPost = false; addArticle = false;
   
 
-  assignmentTopicIdAndParent; postTopicId; articleTopicId;
+  assignmentTopicIdAndParent; postTopicId; 
+  articleTopicId; articleValue;
   userType;
 
   errors;
@@ -81,8 +82,11 @@ export class CourseComponent implements OnInit,  OnDestroy {
       this.addPost = !this.addPost;
     });
 
-    this.courseService.articleMode.subscribe((topicId) => {
-      this.articleTopicId = topicId;
+    this.courseService.articleMode.subscribe((article) => {
+      console.log(article);
+      this.articleTopicId = article.topicId;
+      this.articleValue = article.value;
+
       this.addArticle = !this.addArticle;
     });
 

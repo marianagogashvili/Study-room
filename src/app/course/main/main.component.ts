@@ -21,7 +21,7 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { faFileWord } from '@fortawesome/free-regular-svg-icons';
 import { faFilePdf } from '@fortawesome/free-regular-svg-icons';
 import { faFilePowerpoint } from '@fortawesome/free-regular-svg-icons';
-
+import { faAlignJustify } from '@fortawesome/free-solid-svg-icons';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faVial } from '@fortawesome/free-solid-svg-icons';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
@@ -48,6 +48,7 @@ export class MainComponent implements OnInit, OnDestroy {
   wordIcon = faFileWord;
   fileIcon = faFileAlt;
   testIcon = faVial;
+  articleIcon = faAlignJustify;
   linkIcon = faExternalLinkAlt;
   minusIcon = faMinusCircle;
   arrowDownIcon = faArrowDown;
@@ -266,6 +267,11 @@ export class MainComponent implements OnInit, OnDestroy {
   	}
   }
 
+  goToEditArticle(feedPost, topicId) {
+    this.courseService.showArticle(feedPost, topicId);
+    document.getElementById('header').scrollIntoView({ behavior: 'smooth' });
+  }
+
   showAssignment(topic, assignmentId) {
   	this.courseService.showAssignment({topic: topic, assignmentId: assignmentId});
   	document.getElementById('header').scrollIntoView({ behavior: 'smooth' });	
@@ -277,7 +283,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   showArticle(topic) {
-    this.courseService.showArticle(topic);
+    this.courseService.showArticle(null, topic);
     document.getElementById('header').scrollIntoView({ behavior: 'smooth' });    
   }
 

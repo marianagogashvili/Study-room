@@ -35,7 +35,11 @@ body {
 	
 }
 
-.add-before__btn, .add-assignment__btn, .add-post__btn, .add-test__btn, .edit-test__btn {
+.add-before__btn, 
+.add-assignment__btn, 
+.add-post__btn, 
+.add-test__btn, 
+.edit-test__btn {
 	cursor: pointer;
 	border-radius: 10px;
 	padding: 4px 6px;
@@ -218,8 +222,18 @@ input.ng-touched.ng-invalid {
 	color: #5c5c5c;
 }
 
-.pdf__icon, .word__icon, .link__icon, .file__icon, .test__icon, .powerpoint__icon { 
+.pdf__icon, 
+.word__icon, 
+.link__icon, 
+.file__icon, 
+.test__icon, 
+.powerpoint__icon,
+.article__icon { 
 	font-size: 25px;
+}
+
+.article__icon {
+	margin-right: 10px;
 }
 
 .minus__icon {

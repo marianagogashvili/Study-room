@@ -19,6 +19,8 @@ import { AuthGuardStudent } from './auth-guard-student.service';
 
 import { HomeComponent } from './home/home.component';
 import { DatePipe } from '@angular/common';
+import { SafeHtmlPipe } from './course/article/safeHtml.pipe';
+
 import { EditComponent } from './student/edit/edit.component';
 import { EditTeacherComponent } from './teacher/edit-teacher/edit-teacher.component';
 import { CourseComponent } from './course/course.component';
@@ -42,6 +44,7 @@ import { GradeAnswersComponent } from './course/test-answers/grade-answers/grade
 import { SearchComponent } from './search/search.component';
 import { StudentRequestsComponent } from './course/student-requests/student-requests.component';
 import { AddArticleComponent } from './course/add-article/add-article.component';
+import { ArticleComponent } from './course/article/article.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +76,9 @@ import { AddArticleComponent } from './course/add-article/add-article.component'
     GradeAnswersComponent,
     SearchComponent,
     StudentRequestsComponent,
-    AddArticleComponent
+    AddArticleComponent,
+    ArticleComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,

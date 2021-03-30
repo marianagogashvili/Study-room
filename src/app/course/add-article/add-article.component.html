@@ -4,7 +4,9 @@
 <!-- [@errorState]="deleteCourseState"  -->
 <div style="z-index: 7" [@popupState]="popupState" class="delete__div">
 	<div class="delete__alert-box">
-		<h1>Are you sure you want to exit ? This Post will not be saved.</h1>
+		<h1 *ngIf="!articleValue">Are you sure you want to exit ? This Post will not be saved.</h1>
+		<h1 *ngIf="articleValue">Are you sure you want to exit ? Changes will not be saved.</h1>
+
 		<div class="delete__btns">
 			<button (click)="exit()" class="yes__btn">Yes</button>
 			<button (click)="closePopup()">No</button>
@@ -56,7 +58,6 @@
 		</div>
 		
 		<div 
-			#container
 			id="article" 
 			class="article" 
 			(input)="article = $event.target.innerHTML"

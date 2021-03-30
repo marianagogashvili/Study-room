@@ -11,7 +11,7 @@
 
 <app-add-post [topicId]="postTopicId" [courseId]="course._id" *ngIf="addPost"></app-add-post>
 
-<app-add-article [topicId]="articleTopicId" [courseId]="course._id" *ngIf="addArticle"></app-add-article>
+<app-add-article [articleValue]="articleValue" [topicId]="articleTopicId" [courseId]="course._id" *ngIf="addArticle"></app-add-article>
 
 
 <!-- <div class="backdrop" *ngIf="addAssignment" (click)="addAssignment = false"></div> -->

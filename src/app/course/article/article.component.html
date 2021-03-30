@@ -1,0 +1,5 @@
+<div *ngIf="!loading" class="main">
+	<h1>{{ article.title }}</h1>
+	<span [innerHTML]="article.text | safeHtml"></span>
+
+</div>

@@ -30,14 +30,14 @@ import { faAlignRight } from '@fortawesome/free-solid-svg-icons';
         opacity: 0,
         visibility: 'hidden'
       })),
-      transition('shown <=> hidden', animate(300)),
+      transition('shown <=> hidden', animate(200)),
     ])
   ]
 })
 export class AddArticleComponent implements OnInit {
-  @ViewChild("container", {static: false}) container: ElementRef;
   @Input() topicId;
   @Input() courseId;
+  @Input() articleValue;
 
   popupState = 'hidden';
 
@@ -68,9 +68,19 @@ export class AddArticleComponent implements OnInit {
   }
 
   ngOnInit() {
+
   	this.articleForm = new FormGroup({
   		'title': new FormControl('', Validators.required)
   	});
+
+  	console.log(this.articleValue.title);
+  	if (this.articleValue !== null) {
+  		this.articleForm.patchValue({'title': this.articleValue.title})
+  		// this.article = this.articleValue.title;
+  		document.getElementById('article').innerHTML = this.articleValue.text;
+
+  	}
+
   }
 
   createArticle() {
@@ -100,9 +110,13 @@ export class AddArticleComponent implements OnInit {
   }
 
   showExitPopup() {
-  	console.log("he");
+  	// if (!this.articleValue || this.article = ) {
+
+  	// }
   	if (this.article !== '' || this.articleForm.value.title !== '') {
   		this.popupState = 'shown';
+  	} else {
+  		this.articleService.closePopup();
   	}
   }
 
@@ -114,15 +128,15 @@ export class AddArticleComponent implements OnInit {
   	this.articleService.closePopup();
   }
 
-  add(val) {
-  	const div = document.querySelector('.article');
-  	const ul = document.createElement(val); // ul or ol
-  	var li = document.createElement('li');
-  	ul.appendChild(li);
+  // add(val) {
+  // 	const div = document.querySelector('.article');
+  // 	const ul = document.createElement(val); // ul or ol
+  // 	var li = document.createElement('li');
+  // 	ul.appendChild(li);
 
-  	this.container.nativeElement.appendChild(ul);
+  // 	this.container.nativeElement.appendChild(ul);
 
-  }
+  // }
 
   change(val) {
   	document.execCommand(val, false, null);

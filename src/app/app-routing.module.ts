@@ -24,6 +24,7 @@ import { TestworkComponent } from './course/testwork/testwork.component';
 import { TestAnswersComponent } from './course/test-answers/test-answers.component';
 import { GradeAnswersComponent } from './course/test-answers/grade-answers/grade-answers.component';
 import { StudentRequestsComponent } from './course/student-requests/student-requests.component';
+import { ArticleComponent } from './course/article/article.component';
 
 const appRoutes:Routes = [
 	{ path: '', component: HomeComponent},
@@ -45,6 +46,7 @@ const appRoutes:Routes = [
 		{ path: 'main', canActivate: [AuthGuard], component:  MainComponent },
 		{ path: 'add-student', canActivate: [AuthGuardTeacher], component:  AddStudentComponent },
 		{ path: 'assignment/:assignmentId', canActivate: [AuthGuard], component:  AssignmentComponent },
+		{ path: 'article/:articleId', canActivate: [AuthGuard], component:  ArticleComponent },
 		{ path: 'gradebook', canActivate: [AuthGuardStudent], component: GradebookComponent },
 		{ path: 'add-testwork', canActivate: [AuthGuardTeacher], component: AddTestworkComponent },
 		{ path: 'testwork', canActivate: [AuthGuard], component: TestworkComponent },

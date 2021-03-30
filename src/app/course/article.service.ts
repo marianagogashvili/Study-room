@@ -21,6 +21,17 @@ export class ArticleService {
 			})
 	}
 
+	getArticle(param: Params) {
+		return this.http.post(
+			'http://localhost:8000/article/getArticle', 
+			JSON.stringify(param), {
+				headers: new HttpHeaders({
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + localStorage.getItem('token')
+				})
+			})
+	}
+
 	closePopup() {
 		this.closeArticle.next("close");
 	}
