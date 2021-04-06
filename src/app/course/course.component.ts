@@ -38,7 +38,7 @@ export class CourseComponent implements OnInit,  OnDestroy {
   editMode = false;
   editForm: FormGroup;
 
-  addAssignment = false; addPost = false; addArticle = false;
+  addAssignment = false; addPost = false; addArticle = false; addFolder = false;
   topicId;
   articleValue;
 
@@ -86,6 +86,11 @@ export class CourseComponent implements OnInit,  OnDestroy {
       this.articleValue = article.value;
 
       this.addArticle = !this.addArticle;
+    });
+
+    this.courseService.folderMode.subscribe((topicId) => {
+      this.topicId = topicId;
+      this.addFolder = !this.addFolder;
     });
 
     this.articleService.closeArticle.subscribe(result => {

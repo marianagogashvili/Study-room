@@ -1,0 +1,84 @@
+
+.editDiv {
+	position: absolute;
+	width: 100vw; 
+	height: 100vh;
+	display: flex; 
+	justify-content: center; 
+	align-items: center; 
+}
+
+.container {
+	border-radius: 20px;
+	box-shadow: 0 0 12px white;
+	margin-bottom: 1rem; 
+
+	display: flex; 
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+	background-color: white;
+	margin-right: 20px;
+	position: absolute;
+	width: 60vw;
+	/*height: 90vh;*/
+	width: 600px;
+	height: 500px;
+
+	z-index: 100;
+}
+
+
+.file__div {
+	display: flex; 
+	width: 100%; 
+	justify-content: center; 
+	align-items: center;
+}
+
+.file__btn {
+	background-color: #bababa;
+	border: 0;
+	text-transform: uppercase;
+	color: white;
+	padding: 0.5rem 1rem;
+	border-radius: 10px;
+	outline: none;
+}
+
+.file__input {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.file__icon {
+	color: #7dcc5e;
+	font-size: 30px;
+	margin-left: 15px;
+}
+
+.file__names {
+	display: flex;
+	max-width: 500px;
+    max-height: 200px;
+    overflow-x: overlay;
+    flex-wrap: wrap;
+    line-height: 30px;
+}
+
+.fileName__span {
+	color: black;
+}
+
+.fileName__span {
+ 	margin-left: 10px; 
+ }
+
+.fileName__span:hover {
+	color: #e68383;
+}

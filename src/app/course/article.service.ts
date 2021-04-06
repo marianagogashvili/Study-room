@@ -10,6 +10,18 @@ export class ArticleService {
 
 	closeArticle = new BehaviorSubject<string>(null);
 
+	uploadFolder(param: Params) {
+		return this.http.post(
+			'http://localhost:8000/article/uploadFolder', 
+			JSON.stringify(param), {
+				headers: new HttpHeaders({
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + localStorage.getItem('token')
+				})
+			});
+	}
+	//////
+
 	createArticle(param: Params) {
 		return this.http.post(
 			'http://localhost:8000/article/createArticle', 

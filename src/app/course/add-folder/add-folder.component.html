@@ -1,0 +1,24 @@
+<div class="editDiv"> 
+	
+<form class="container" #assignmentForm="ngForm" (ngSubmit)="createAssignment(assignmentForm)">
+	<label for="">Title</label>
+	<input type="" name="">
+
+	
+	<div class="file__div">
+		<label  class="file__btn">Select file</label>
+		<input 
+			type="file" 
+			id="fileName" 
+			name="fileName"
+			class="file__input" 
+			(change)="saveFile($event)"
+			webkitdirectory 
+			mozdirectory
+			onclick="this.value=null">
+	</div>
+	<button (click)="save()">Save</button>
+
+</form>
+
+</div>

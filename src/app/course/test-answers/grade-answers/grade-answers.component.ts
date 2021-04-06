@@ -47,8 +47,9 @@ export class GradeAnswersComponent implements OnInit, OnDestroy {
 			  	});
 
 	  			this.studentAnswer = student.answers;
+         console.log(this.studentAnswer);
 	  			(<FormArray>this.pointsForm.get('answers')).push(answ);
-		  		
+		  		 console.log(this.pointsForm);
 	  		});
   		} else {
   			this.router.navigate(['../'], {queryParams: {testworkId: this.testId}, relativeTo:this.route});  			

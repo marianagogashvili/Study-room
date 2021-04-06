@@ -369,6 +369,11 @@ export class MainComponent implements OnInit, OnDestroy {
     });
   }
 
+  showFolder(topic) {
+    this.courseService.showFolder(topic);
+    document.getElementById('header').scrollIntoView({ behavior: 'smooth' });    
+  }
+
 
   // ======= Scroll ========
 

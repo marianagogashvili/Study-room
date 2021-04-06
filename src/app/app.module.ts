@@ -45,6 +45,7 @@ import { SearchComponent } from './search/search.component';
 import { StudentRequestsComponent } from './course/student-requests/student-requests.component';
 import { AddArticleComponent } from './course/add-article/add-article.component';
 import { ArticleComponent } from './course/article/article.component';
+import { AddFolderComponent } from './course/add-folder/add-folder.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { ArticleComponent } from './course/article/article.component';
     StudentRequestsComponent,
     AddArticleComponent,
     ArticleComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    AddFolderComponent
   ],
   imports: [
     BrowserModule,

@@ -5,7 +5,7 @@
 			<span class="points__span" [ngClass]="{'no__points': !this.pointsForm.value.answers[i].grade && this.pointsForm.value.answers[i].grade !== 0}">points: <input formControlName="grade" [value]="answer.points" type="number" min="0" [max]="answer.question.points">  / {{ answer.question.points }}</span>
 			
 			{{ answer.question.title }}</h3>
-		<div class="choice__list" *ngIf="answer.question.a">
+			<div class="choice__list" *ngIf="!answer.question.e && answer.question.a">
 			<div class="choice__div">
 				<p [ngClass]="{'correct__choice': (answer.question.answer === 'a'), 'wrong__choice': answer.studentAnswer === 'a' && answer.points === 0}">a</p>
 				{{ answer.question.a }}
@@ -24,6 +24,116 @@
 			</div>
 			
 		</div>
+
+		<div class="choice__list" *ngIf="answer.question.e">
+			<div class="choice__div2">
+				<p 
+					[ngClass]="{
+					'correct__choice': answer.question.answers.a === true ,
+					'wrong__choice': answer.studentAnswer.a === true && answer.question.answers.a === false,
+					'correct__choice__unchecked': answer.studentAnswer.a === false && answer.question.answers.a === true  }"
+					disabled>a</p>
+				<span
+					[ngClass]="{
+					'correct__choice_span': answer.studentAnswer.a === true && answer.question.answers.a === true,
+					'wrong__choice_span': answer.studentAnswer.a === true && answer.question.answers.a === false } ">
+				{{ answer.question.a }}</span>
+			</div>
+			<div class="choice__div2">
+				<p 
+					[ngClass]="{
+					'correct__choice': answer.question.answers.b === true ,
+					'wrong__choice': answer.studentAnswer.b === true && answer.question.answers.b === false }"
+					disabled>b</p>
+				<span
+					[ngClass]="{
+					'correct__choice_span': answer.studentAnswer.b === true && answer.question.answers.b === true,
+					'wrong__choice_span': answer.studentAnswer.b === true && answer.question.answers.b === false } ">
+				{{ answer.question.b }}</span>
+			</div>
+			<div class="choice__div2">
+				<p 
+					[ngClass]="{
+					'correct__choice': answer.question.answers.c === true ,
+					'wrong__choice': answer.studentAnswer.c === true && answer.question.answers.c === false }"
+					disabled>c</p>
+				<span
+					[ngClass]="{
+					'correct__choice_span': answer.studentAnswer.c === true && answer.question.answers.c === true,
+					'wrong__choice_span': answer.studentAnswer.c === true && answer.question.answers.c === false } ">
+				{{ answer.question.c }}</span>
+			</div>
+			<div class="choice__div2">
+				<p 
+					[ngClass]="{
+					'correct__choice': answer.question.answers.d === true ,
+					'wrong__choice': answer.studentAnswer.d === true && answer.question.answers.d === false }"
+					disabled>d</p>
+				<span
+					[ngClass]="{
+					'correct__choice_span': answer.studentAnswer.d === true && answer.question.answers.d === true,
+					'wrong__choice_span': answer.studentAnswer.d === true && answer.question.answers.d === false } ">
+				{{ answer.question.d }}</span>
+			</div>
+			<div class="choice__div2">
+				<p 
+					[ngClass]="{
+					'correct__choice': answer.question.answers.e === true ,
+					'wrong__choice': answer.studentAnswer.e === true && answer.question.answers.e === false }"
+					disabled>e</p>
+				<span
+					[ngClass]="{
+					'correct__choice_span': answer.studentAnswer.e === true && answer.question.answers.e === true,
+					'wrong__choice_span': answer.studentAnswer.e === true && answer.question.answers.e === false } ">
+				{{ answer.question.e }}</span>
+			</div>
+			<div class="choice__div2">
+				<p
+					[ngClass]="{
+					'correct__choice': answer.question.answers.f === true ,
+					'wrong__choice': answer.studentAnswer.f === true && answer.question.answers.f === false }"
+					disabled>f</p>
+				<span
+					[ngClass]="{
+					'correct__choice_span': answer.studentAnswer.f === true && answer.question.answers.f === true,
+					'wrong__choice_span': answer.studentAnswer.f === true && answer.question.answers.f === false } ">
+				{{ answer.question.f }}</span>
+			</div>
+		</div>
+
+		<div *ngIf="!answer.question.a">
+			
+			<div *ngIf="answer.points === 0">
+				<div class="wrong_answ__div">
+					Your answer: {{  answer.studentAnswer }}
+				</div>
+				<div class="correct_answ__div">
+					Correct answer: {{  answer.question.answer }}
+				</div>
+			</div>
+			<div class="correct_answ__div" *ngIf=" answer.points !== 0">
+				Correct answer: {{  answer.question.answer }}
+			</div>
+		</div>
+<!-- 		<div class="choice__list" *ngIf="answer.question.a">
+			<div class="choice__div">
+				<p [ngClass]="{'correct__choice': (answer.question.answer === 'a'), 'wrong__choice': answer.studentAnswer === 'a' && answer.points === 0}">a</p>
+				{{ answer.question.a }}
+			</div>
+			<div class="choice__div">
+				<p [ngClass]="{'correct__choice': (answer.question.answer === 'b'), 'wrong__choice': answer.studentAnswer === 'b' && answer.points === 0}">b</p>
+				{{ answer.question.b }}
+			</div>
+			<div class="choice__div">
+				<p [ngClass]="{'correct__choice': (answer.question.answer === 'c'), 'wrong__choice': answer.studentAnswer === 'c' && answer.points === 0}">c</p>
+				{{ answer.question.c }}
+			</div>
+			<div class="choice__div">
+				<p [ngClass]="{'correct__choice': (answer.question.answer === 'd'), 'wrong__choice': answer.studentAnswer === 'd' && answer.points === 0}">d</p>
+				{{ answer.question.d }}
+			</div>
+		</div>
+
 		<div *ngIf="!answer.question.a">
 			<div class="student_answ__div">
 				Student's answer: {{  answer.studentAnswer }}
@@ -32,7 +142,7 @@
 				Correct answer: {{  answer.question.answer }}
 			</div>
 		
-		</div>
+		</div> -->
 	</div>
 	<div style="text-align: center;">
 		<button (click)="saveGrade()" class="create__btn">Save</button>

@@ -13,10 +13,13 @@
 
 <app-add-article [articleValue]="articleValue" [topicId]="topicId" [courseId]="course._id" *ngIf="addArticle"></app-add-article>
 
+<app-add-folder [topicId]="topicId" [courseId]="course._id" *ngIf="addFolder"></app-add-folder>
+
+
 
 <!-- <div class="backdrop" *ngIf="addAssignment" (click)="addAssignment = false"></div> -->
 
-<div class="backdrop" *ngIf="addAssignment || addPost" (click)="addAssignment = false; addPost = false; "></div>
+<div class="backdrop" *ngIf="addAssignment || addPost || addFolder" (click)="addAssignment = false; addPost = false; addFolder = false"></div>
 
 <body id="main2" *ngIf="!loading">
 	<div [hidden]="deleteCourseState === 'hidden'" class="backdrop"></div>

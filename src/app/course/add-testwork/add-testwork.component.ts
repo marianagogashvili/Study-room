@@ -158,7 +158,7 @@ export class AddTestworkComponent implements OnInit, OnDestroy {
   	const testQuestions = this.createForm.value.testQuestions;
     console.log(testQuestions);
 
-  	if (testQuestions !== []) {
+  	if (testQuestions.length > 0) {
   		const title = this.createForm.value.title;
 
 	  	const deadline = this.createForm.value.deadline;
